@@ -128,16 +128,16 @@ Operacja jest odrzucana.
 
 # Zespół projektowy
 
-Project Manager M. Skipor
+Project Manager M. Skipor:
 zarządzanie projektem, wymagania systemowe, plan testów.
 
-Programista 1 T. Kandziora
+Programista 1 T. Kandziora:
 architektura systemu, implementacja Master, protokół komunikacji.
 
-Programista 2 J. Krawczyk
+Programista 2 J. Krawczyk:
 implementacja Slave, obsługa UART PC, sterowanie LED.
 
-Test / V&V G. Rak
+Test / V&V G. Rak:
 testy integracyjne, scenariusze testowe oraz walidacja działania systemu.
 
 ---
