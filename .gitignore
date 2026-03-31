@@ -1,0 +1,68 @@
+# Build folders
+/build/
+/Debug/
+/Release/
+/out/
+/bin/
+/obj/
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+compile_commands.json
+
+# Make
+*.o
+*.d
+*.elf
+*.map
+*.hex
+*.bin
+
+# STM32CubeIDE / Eclipse
+.project
+.cproject
+.settings/
+*.launch
+
+# VS Code
+.vscode/
+
+# Keil / MDK
+*.uvprojx
+*.uvoptx
+*.axf
+*.dep
+*.lst
+*.map
+
+# IAR
+*.ewp
+*.eww
+*.ewd
+*.dep
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# HAL generated files (opcjonalnie)
+# Jeśli chcesz ignorować auto-generowane:
+# Core/Src/*
+# Core/Inc/*
+# Drivers/*
+
+# Backup files
+*.orig
+*.rej
