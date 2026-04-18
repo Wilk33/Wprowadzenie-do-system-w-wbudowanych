@@ -57,7 +57,8 @@ void* _sbrk(ptrdiff_t incr) {
     extern uint32_t _Min_Stack_Size; /* Symbol defined in the linker script */
     const uint32_t stack_limit =
         (uint32_t)&_estack - (uint32_t)&_Min_Stack_Size;
-    const uint8_t* max_heap = (uint8_t*)stack_limit;
+    const uint8_t* max_heap =
+        (uint8_t*)stack_limit;  // NOLINT(readability/casting)
     uint8_t* prev_heap_end;
 
     /* Initialize heap end at first call */

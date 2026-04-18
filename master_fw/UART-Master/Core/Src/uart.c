@@ -56,7 +56,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
             uint8_t ping = 0xFF;
             if (s_huart) {
                 HAL_UART_Receive_IT(s_huart, (uint8_t*)&s_pong_byte,
-                                    1);  // NOLINT
+                                    1); // NOLINT(readability/casting)
                 HAL_UART_Transmit(s_huart, &ping, 1, 10);
             }
         }
