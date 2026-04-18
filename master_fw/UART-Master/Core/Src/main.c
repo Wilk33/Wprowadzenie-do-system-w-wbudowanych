@@ -18,14 +18,14 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include "master_fw\UART-Master\Core\Inc\main.h"
+#include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 #include <string.h>
-#include "master_fw\UART-Master\Core\Inc\leds.h"
-#include "master_fw\UART-Master\Core\Inc\uart.h"
+#include "leds.h"
+#include "uart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

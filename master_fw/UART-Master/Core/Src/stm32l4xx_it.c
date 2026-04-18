@@ -19,8 +19,8 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
-#include "master_fw\UART-Master\Core\Inc\main.h"
-#include "master_fw\UART-Master\Core\Inc\stm32l4xx_it.h" 
+#include "main.h"
+#include "stm32l4xx_it.h" 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */

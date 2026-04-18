@@ -3,8 +3,8 @@
  *leds.c - LED/Buttons handling
  */
 
-#include "master_fw\UART-Master\Core\Inc\leds.h"
-#include "master_fw\UART-Master\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal.h"
+#include "leds.h"
+#include "stm32l4xx_hal.h"
 
 /* Forward declaration of uart API (implemented in uart.c) */
 extern void UART_SendLedValue(uint8_t value);
@@ -51,7 +51,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     if (UART_IsConnected()) {
         if (GPIO_Pin == Button_1_Pin) {
             s_led_number++;
-            if (s_led_number > 4)
+            if (s_led_number > 8)
                 s_led_number = 0;
             Update_LEDs(s_led_number);
         }
