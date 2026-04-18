@@ -1,9 +1,10 @@
+// Copyright 2026 TOK3T
 /*
  * app.h
  * Declarations for application-level logic moved out of main.c
  */
-#ifndef __APP_H
-#define __APP_H
+#ifndef MASTER_FW_UART_MASTER_CORE_INC_APP_H_
+#define MASTER_FW_UART_MASTER_CORE_INC_APP_H_
 
 #include "main.h"
 #include <stdint.h>
@@ -34,4 +35,4 @@ extern const uint32_t DEBOUNCE_DELAY;
 }
 #endif
 
-#endif /* __APP_H */
+#endif  // MASTER_FW_UART_MASTER_CORE_INC_APP_H_

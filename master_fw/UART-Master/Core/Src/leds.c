@@ -49,7 +49,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     if (UART_IsConnected()) {
         if (GPIO_Pin == Button_1_Pin) {
             s_led_number++;
-            if (s_led_number > 8)
+            if (s_led_number > 4)
                 s_led_number = 0;
             Update_LEDs(s_led_number);
         }

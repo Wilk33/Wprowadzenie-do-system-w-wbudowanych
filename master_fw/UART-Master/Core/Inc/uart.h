@@ -1,7 +1,9 @@
-/* uart.h - UART/timer module
+// Copyright 2026 TOK3T
+/*
+ * uart.h - UART/timer module
  */
-#ifndef __UART_H
-#define __UART_H
+#ifndef MASTER_FW_UART_MASTER_CORE_INC_UART_H_
+#define MASTER_FW_UART_MASTER_CORE_INC_UART_H_
 
 #include "main.h"
 #include <stdint.h>

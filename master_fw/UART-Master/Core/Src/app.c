@@ -1,3 +1,4 @@
+// Copyright 2026 TOK3T
 /*
  * app.c
  * Application stub - moved logic to uart and leds modules

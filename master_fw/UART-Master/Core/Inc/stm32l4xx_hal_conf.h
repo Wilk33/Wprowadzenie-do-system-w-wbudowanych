@@ -21,8 +21,8 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef STM32L4xx_HAL_CONF_H
-#define STM32L4xx_HAL_CONF_H
+#ifndef MASTER_FW_UART_MASTER_CORE_INC_STM32L4XX_HAL_CONF_H_
+#define MASTER_FW_UART_MASTER_CORE_INC_STM32L4XX_HAL_CONF_H_
 
 #ifdef __cplusplus
 extern "C" {

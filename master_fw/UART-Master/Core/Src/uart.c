@@ -1,4 +1,6 @@
-/* uart.c - UART and timer logic
+// Copyright 2026 TOK3T
+/* 
+ *uart.c - UART and timer logic
  */
 
 #include "uart.h"
