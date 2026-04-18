@@ -1,0 +1,46 @@
+# Build output folders
+build/
+cmake-build*/
+Debug/
+Release/
+
+# STM32CubeMX generated files that should not be tracked
+*.ioc.user
+mx.scratch
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+build.ninja
+compile_commands.json
+*.dir
+
+# Toolchain and object files
+*.o
+*.obj
+*.d
+*.elf
+*.bin
+*.hex
+*.lst
+*.map
+*.axf
+*.srec
+
+# Backup and editor temporary files
+*~
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# IDE/workspace
+*.user
+*.vcxproj*
+*.workspace
+.vscode/
+
+# Keep project-level settings if needed
+!.settings
