@@ -1,3 +1,4 @@
+// Copyright 2026 TOK3T
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
@@ -92,18 +93,18 @@ extern "C" {
 #define HAL_PWR_MODULE_ENABLED
 #define HAL_CORTEX_MODULE_ENABLED
 
-/* ########################## Oscillator Values adaptation ####################*/
+/* ####################### Oscillator Values adaptation ##################*/
 /**
   * @brief Adjust the value of External High Speed oscillator (HSE) used in your application.
   *        This value is used by the RCC HAL module to compute the system frequency
   *        (when HSE is used as system clock source, directly or through the PLL).
   */
 #if !defined(HSE_VALUE)
-#define HSE_VALUE ((uint32_t)8000000U) /*!< Value of the External oscillator in Hz */
+#define HSE_VALUE ((uint32_t)8000000U)
 #endif                                 /* HSE_VALUE */
 
 #if !defined(HSE_STARTUP_TIMEOUT)
-#define HSE_STARTUP_TIMEOUT ((uint32_t)100U) /*!< Time out for HSE start up, in ms */
+#define HSE_STARTUP_TIMEOUT ((uint32_t)100U)
 #endif                                       /* HSE_STARTUP_TIMEOUT */
 
 /**
@@ -111,7 +112,7 @@ extern "C" {
   *        This value is the default MSI range value after Reset.
   */
 #if !defined(MSI_VALUE)
-#define MSI_VALUE ((uint32_t)4000000U) /*!< Value of the Internal oscillator in Hz*/
+#define MSI_VALUE ((uint32_t)4000000U)
 #endif                                 /* MSI_VALUE */
 /**
   * @brief Internal High Speed oscillator (HSI) value.
@@ -119,7 +120,7 @@ extern "C" {
   *        (when HSI is used as system clock source, directly or through the PLL).
   */
 #if !defined(HSI_VALUE)
-#define HSI_VALUE ((uint32_t)16000000U) /*!< Value of the Internal oscillator in Hz*/
+#define HSI_VALUE ((uint32_t)16000000U)
 #endif                                  /* HSI_VALUE */
 
 /**
@@ -131,18 +132,15 @@ extern "C" {
   */
 #if !defined(HSI48_VALUE)
 #define HSI48_VALUE                                                                                \
-    ((uint32_t)48000000U) /*!< Value of the Internal High Speed oscillator for USB FS/SDMMC/RNG in Hz.
-                                              The real value my vary depending on manufacturing process variations.*/
-#endif                    /* HSI48_VALUE */
+    ((uint32_t)48000000U) 
+#endif
 
 /**
   * @brief Internal Low Speed oscillator (LSI) value.
   */
 #if !defined(LSI_VALUE)
 #define LSI_VALUE 32000U /*!< LSI Typical Value in Hz*/
-#endif /* LSI_VALUE */   /*!< Value of the Internal Low Speed oscillator in Hz
-                                             The real value may vary depending on the variations
-                                             in voltage and temperature.*/
+#endif
 
 /**
   * @brief External Low Speed oscillator (LSE) value.
@@ -162,7 +160,7 @@ extern "C" {
   *        frequency.
   */
 #if !defined(EXTERNAL_SAI1_CLOCK_VALUE)
-#define EXTERNAL_SAI1_CLOCK_VALUE 2097000U /*!< Value of the SAI1 External clock source in Hz*/
+#define EXTERNAL_SAI1_CLOCK_VALUE 2097000U
 #endif                                     /* EXTERNAL_SAI1_CLOCK_VALUE */
 
 /**
@@ -171,7 +169,7 @@ extern "C" {
   *        frequency.
   */
 #if !defined(EXTERNAL_SAI2_CLOCK_VALUE)
-#define EXTERNAL_SAI2_CLOCK_VALUE 48000U /*!< Value of the SAI2 External clock source in Hz*/
+#define EXTERNAL_SAI2_CLOCK_VALUE 48000U
 #endif                                   /* EXTERNAL_SAI2_CLOCK_VALUE */
 
 /* Tip: To avoid modifying this file each time you need to use different HSE,
@@ -480,4 +478,4 @@ void assert_failed(uint8_t* file, uint32_t line);
 }
 #endif
 
-#endif /* STM32L4xx_HAL_CONF_H */
+#endif  // MASTER_FW_UART_MASTER_CORE_INC_STM32L4XX_HAL_CONF_H_

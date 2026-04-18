@@ -20,8 +20,8 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __MAIN_H
-#define __MAIN_H
+#ifndef MASTER_FW_UART_MASTER_CORE_INC_MAIN_H_
+#define MASTER_FW_UART_MASTER_CORE_INC_MAIN_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -100,4 +100,4 @@ void Error_Handler(void);
 }
 #endif
 
-#endif /* __MAIN_H */
+#endif  // MASTER_FW_UART_MASTER_CORE_INC_MAIN_H_
