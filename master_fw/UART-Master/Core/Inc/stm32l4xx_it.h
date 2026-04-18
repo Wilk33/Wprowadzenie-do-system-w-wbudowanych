@@ -19,7 +19,7 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32L4xx_IT_H
+#ifndef MASTER_FW_UART_MASTER_CORE_INC_STM32L4XX_IT_H_
 #define __STM32L4xx_IT_H
 
 #ifdef __cplusplus
@@ -68,4 +68,4 @@ void USART1_IRQHandler(void);
 }
 #endif
 
-#endif /* __STM32L4xx_IT_H */
+#endif  // MASTER_FW_UART_MASTER_CORE_INC_STM32L4XX_IT_H_

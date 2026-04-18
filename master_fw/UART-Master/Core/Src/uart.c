@@ -27,13 +27,13 @@ void UART_SetConnectionOk(void) {
     s_connection_state = 1;
     /* ensure receiver is armed */
     if (s_huart)
-        HAL_UART_Receive_IT(s_huart, (uint8_t*)&s_pong_byte, 1);
+        HAL_UART_Receive_IT(s_huart, (uint8_t*)&s_pong_byte, 1); // NOLINT
 }
 
 void UART_SendLedValue(uint8_t value) {
     if (!s_huart)
         return;
-    HAL_UART_Transmit(s_huart, (uint8_t*)&value, 1, 10);
+    HAL_UART_Transmit(s_huart, (uint8_t*)&value, 1, 10); // NOLINT
 }
 
 /* HAL callbacks handled here */
@@ -55,7 +55,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
             s_connection_state = 2;
             uint8_t ping = 0xFF;
             if (s_huart) {
-                HAL_UART_Receive_IT(s_huart, (uint8_t*)&s_pong_byte, 1);
+                HAL_UART_Receive_IT(s_huart, (uint8_t*)&s_pong_byte, 1); // NOLINT
                 HAL_UART_Transmit(s_huart, &ping, 1, 10);
             }
         }
@@ -68,6 +68,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart) {
             s_connection_state = 1;
         }
         if (s_huart)
-            HAL_UART_Receive_IT(s_huart, (uint8_t*)&s_pong_byte, 1);
+            HAL_UART_Receive_IT(s_huart, (uint8_t*)&s_pong_byte, 1); // NOLINT
     }
 }

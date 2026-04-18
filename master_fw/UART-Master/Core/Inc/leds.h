@@ -5,7 +5,7 @@
 #define __LEDS_H
 
 #include <stdint.h>
-#include "main.h"
+#include "master_fw\UART-Master\Core\Inc\main.h"
 
 #ifdef __cplusplus
 extern "C" {

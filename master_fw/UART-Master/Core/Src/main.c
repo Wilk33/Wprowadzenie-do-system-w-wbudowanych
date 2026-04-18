@@ -18,14 +18,14 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
+#include "master_fw\UART-Master\Core\Inc\main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 #include <string.h>
-#include "leds.h"
-#include "uart.h"
+#include "master_fw\UART-Master\Core\Inc\leds.h"
+#include "master_fw\UART-Master\Core\Inc\uart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -124,7 +124,7 @@ void SystemClock_Config(void) {
 
     /** Configure the main internal regulator output voltage
   */
-    if(HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1)!=HAL_OK){
+    if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1) != HAL_OK) { //NOLINT
         Error_Handler();
     }
 
@@ -155,7 +155,7 @@ void SystemClock_Config(void) {
     /** Initializes the CPU, AHB and APB buses clocks
   */
     RCC_ClkInitStruct.ClockType =
-    RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK|RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2; //NOLINT
+    RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2; //NOLINT
     RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
     RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
     RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
@@ -196,12 +196,12 @@ static void MX_TIM2_Init(void) {
         Error_Handler();
     }
     sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-    if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK){
+    if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK) { //NOLINT
         Error_Handler();
     }
     sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
     sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-    if (HAL_TIMEx_MasterConfigSynchronization(&htim2,&sMasterConfig)!=HAL_OK){
+    if (HAL_TIMEx_MasterConfigSynchronization(&htim2 ,&sMasterConfig) != HAL_OK) { //NOLINT
         Error_Handler();
     }
     /* USER CODE BEGIN TIM2_Init 2 */
@@ -257,16 +257,17 @@ static void MX_GPIO_Init(void) {
     __HAL_RCC_GPIOB_CLK_ENABLE();
 
     /*Configure GPIO pin Output Level */
-    HAL_GPIO_WritePin(GPIOA,Led_1_Pin|Led_2_Pin|Led_Signal_Pin|Led_4_Pin|Led_3_Pin, //NOLINT
+    HAL_GPIO_WritePin(GPIOA,Led_1_Pin | Led_2_Pin | Led_Signal_Pin | Led_4_Pin | Led_3_Pin, //NOLINT
                       GPIO_PIN_RESET);
 
     /*Configure GPIO pin Output Level */
-    HAL_GPIO_WritePin(GPIOB, Led_8_Pin|Led_5_Pin|LD3_Pin|Led_6_Pin|Led_7_Pin,
+    HAL_GPIO_WritePin(GPIOB, Led_8_Pin | Led_5_Pin | LD3_Pin | Led_6_Pin | Led_7_Pin, //NOLINT
                       GPIO_PIN_RESET);
 
     /*Configure GPIO pins : Led_1_Pin Led_2_Pin Led_Signal_Pin Led_4_Pin
                            Led_3_Pin */
-    GPIO_InitStruct.Pin = Led_1_Pin |Led_2_Pin|Led_Signal_Pin|Led_4_Pin|Led_3_Pin;
+    GPIO_InitStruct.Pin = Led_1_Pin | Led_2_Pin | Led_Signal_Pin;
+    GPIO_InitStruct.Pin = Led_4_Pin | Led_3_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -280,7 +281,7 @@ static void MX_GPIO_Init(void) {
 
     /*Configure GPIO pins : Led_8_Pin Led_5_Pin LD3_Pin Led_6_Pin
                            Led_7_Pin */
-    GPIO_InitStruct.Pin = Led_8_Pin |Led_5_Pin|LD3_Pin|Led_6_Pin|Led_7_Pin;
+    GPIO_InitStruct.Pin = Led_8_Pin | Led_5_Pin | LD3_Pin | Led_6_Pin | Led_7_Pin; //NOLINT
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

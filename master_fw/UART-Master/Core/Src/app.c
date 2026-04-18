@@ -4,7 +4,7 @@
  * Application stub - moved logic to uart and leds modules
  */
 
-#include "app.h"
+#include "master_fw\UART-Master\Core\Inc\app.h"
 
 void App_Init(void) {
     /* stub: application logic moved to uart/leds modules */

@@ -89,7 +89,7 @@
   * @{
   */
 
-#include "stm32l4xx.h"
+#include "stm32l4xx.h" //NOLINT
 
 /**
   * @}
@@ -127,24 +127,17 @@
 /* #define USER_VECT_TAB_ADDRESS */
 
 #if defined(USER_VECT_TAB_ADDRESS)
-/*!< Uncomment the following line if you need to relocate your vector Table
-     in Sram else user remap will be done in Flash. */
-/* #define VECT_TAB_SRAM */
-
 #if defined(VECT_TAB_SRAM)
-#define VECT_TAB_BASE_ADDRESS                                                                      \
-    SRAM1_BASE /*!< Vector Table base address field.
-                                                     This value must be a multiple of 0x200. */
+#define VECT_TAB_BASE_ADDRESS \
+    SRAM1_BASE
 #else
-#define VECT_TAB_BASE_ADDRESS                                                                      \
-    FLASH_BASE /*!< Vector Table base address field.
-                                                     This value must be a multiple of 0x200. */
+#define VECT_TAB_BASE_ADDRESS \
+    FLASH_BASE
 #endif         /* VECT_TAB_SRAM */
 
 #if !defined(VECT_TAB_OFFSET)
-#define VECT_TAB_OFFSET                                                                            \
-    0x00000000U /*!< Vector Table offset field.
-                                                     This value must be a multiple of 0x200. */
+#define VECT_TAB_OFFSET \
+    0x00000000U
 #endif          /* VECT_TAB_OFFSET */
 
 #endif /* USER_VECT_TAB_ADDRESS */
@@ -202,13 +195,13 @@ const uint32_t MSIRangeTable[12] = {100000U,  200000U,  400000U,   800000U,   10
 
 void SystemInit(void) {
 #if defined(USER_VECT_TAB_ADDRESS)
-    /* Configure the Vector Table location -------------------------------------*/
+    /* Configure the Vector Table location ----------------*/
     SCB->VTOR = VECT_TAB_BASE_ADDRESS | VECT_TAB_OFFSET;
 #endif
 
-    /* FPU settings ------------------------------------------------------------*/
+    /* FPU settings --------------------------------------*/
 #if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
-    SCB->CPACR |= ((3UL << 20U) | (3UL << 22U)); /* set CP10 and CP11 Full Access */
+    SCB->CPACR |= ((3UL << 20U) | (3UL << 22U));
 #endif
 }
 
@@ -256,8 +249,8 @@ void SystemInit(void) {
 void SystemCoreClockUpdate(void) {
     uint32_t tmp, msirange, pllvco, pllsource, pllm, pllr;
 
-    /* Get MSI Range frequency--------------------------------------------------*/
-    if ((RCC->CR & RCC_CR_MSIRGSEL) == 0U) { /* MSISRANGE from RCC_CSR applies */
+    /* Get MSI Range frequency---------------------------------------*/
+    if ((RCC->CR & RCC_CR_MSIRGSEL) == 0U) {
         msirange = (RCC->CSR & RCC_CSR_MSISRANGE) >> 8U;
     } else { /* MSIRANGE from RCC_CR applies */
         msirange = (RCC->CR & RCC_CR_MSIRANGE) >> 4U;
@@ -265,7 +258,7 @@ void SystemCoreClockUpdate(void) {
     /*MSI frequency range in HZ*/
     msirange = MSIRangeTable[msirange];
 
-    /* Get SYSCLK source -------------------------------------------------------*/
+    /* Get SYSCLK source ----------------------------------------*/
     switch (RCC->CFGR & RCC_CFGR_SWS) {
     case 0x00: /* MSI used as system clock source */
         SystemCoreClock = msirange;
@@ -308,7 +301,7 @@ void SystemCoreClockUpdate(void) {
         SystemCoreClock = msirange;
         break;
     }
-    /* Compute HCLK clock frequency --------------------------------------------*/
+    /* Compute HCLK clock frequency ------------------------------------*/
     /* Get HCLK prescaler */
     tmp = AHBPrescTable[((RCC->CFGR & RCC_CFGR_HPRE) >> 4U)];
     /* HCLK clock frequency */

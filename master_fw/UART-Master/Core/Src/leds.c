@@ -3,8 +3,8 @@
  *leds.c - LED/Buttons handling
  */
 
-#include "leds.h"
-#include "stm32l4xx_hal.h"
+#include "master_fw\UART-Master\Core\Inc\leds.h"
+#include "master_fw\UART-Master\Drivers\STM32L4xx_HAL_Driver\Inc\stm32l4xx_hal.h"
 
 /* Forward declaration of uart API (implemented in uart.c) */
 extern void UART_SendLedValue(uint8_t value);

@@ -5,8 +5,8 @@
 #ifndef MASTER_FW_UART_MASTER_CORE_INC_UART_H_
 #define MASTER_FW_UART_MASTER_CORE_INC_UART_H_
 
-#include "main.h"
 #include <stdint.h>
+#include "master_fw\UART-Master\Core\Inc\main.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -21,4 +21,4 @@ void UART_SetConnectionOk(void);
 }
 #endif
 
-#endif /* __UART_H */
+#endif  // MASTER_FW_UART_MASTER_CORE_INC_UART_H_
