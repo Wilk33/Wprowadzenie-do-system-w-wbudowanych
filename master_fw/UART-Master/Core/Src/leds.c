@@ -42,20 +42,21 @@ void Led_OnDisconnect(void) {
  * Only button logic lives here; UART handling is delegated to uart module. */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     uint32_t now = HAL_GetTick();
-    if ((now - s_last_button_press_time) < s_debounce_delay) return;
+    if ((now - s_last_button_press_time) < s_debounce_delay)
+        return;
     s_last_button_press_time = now;
 
     if (UART_IsConnected()) {
         if (GPIO_Pin == Button_1_Pin) {
             s_led_number++;
-            if (s_led_number > 8) s_led_number = 0;
+            if (s_led_number > 8)
+                s_led_number = 0;
             Update_LEDs(s_led_number);
         }
         if (GPIO_Pin == Button_2_Pin) {
             UART_SendLedValue((uint8_t)s_led_number);
         }
-    }
-    else {
+    } else {
         if (GPIO_Pin == Button_Signal_Pin) {
             HAL_GPIO_WritePin(Led_Signal_GPIO_Port, Led_Signal_Pin, GPIO_PIN_RESET);
             /* inform UART layer that connection is OK */

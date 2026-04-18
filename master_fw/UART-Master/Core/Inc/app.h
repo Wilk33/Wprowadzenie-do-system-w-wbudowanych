@@ -14,12 +14,12 @@ extern "C" {
 
 /* Connection state values */
 #define CONN_NONE 0U
-#define CONN_OK   1U
+#define CONN_OK 1U
 #define CONN_WAIT 2U
 
 /* Public API */
 void App_Init(void);
-void App_Start(TIM_HandleTypeDef *htim, UART_HandleTypeDef *huart);
+void App_Start(TIM_HandleTypeDef* htim, UART_HandleTypeDef* huart);
 
 void Update_LEDs(uint8_t count);
 
