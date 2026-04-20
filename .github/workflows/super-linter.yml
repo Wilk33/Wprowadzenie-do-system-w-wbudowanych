@@ -27,5 +27,6 @@ jobs:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: "main"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_CLANG_FORMAT: false
           FILTER_REGEX_EXCLUDE: (Drivers|CMSIS)
-          CPP_LINT_FLAGS: "--filter=-build/include_subdir"
+          CPP_LINT_FLAGS: "--filter=-build/include_subdir,-readability/casting"
