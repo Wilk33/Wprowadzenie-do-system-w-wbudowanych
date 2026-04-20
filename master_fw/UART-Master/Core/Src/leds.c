@@ -10,7 +10,7 @@ extern uint8_t UART_IsConnected(void);
 
 static volatile uint8_t s_led_number = 0;
 static volatile uint32_t s_last_button_press_time = 0;
-static const uint32_t s_debounce_delay = 150;
+static const uint32_t s_debounce_delay = 140;
 
 void Led_Init(void) {
     s_led_number = 0;
