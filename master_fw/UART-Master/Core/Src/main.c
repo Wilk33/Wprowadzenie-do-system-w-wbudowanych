@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "leds.h"
-#include "uart.h"
+#include "uart.h"  //NOLINT
 
 /* USER CODE END Includes */
 
