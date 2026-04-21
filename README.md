@@ -26,16 +26,14 @@ nadzoruje wykonywanie operacji i decyduje czy dana operacja może zostać wykona
 ---
 
 # Aktualna funkcjonalność
-
-Użytkownik wysyła polecenie ustawienia koloru diody LED do układu Slave.
+System realizuje wieloetapowy proces przetwarzania danych, rozpoczynający się od rygorystycznej analizy składniowej komend przychodzących z terminala. 
+Po pomyślnej walidacji instrukcja trafia do jednostki nadzorczej, która decyduje o dopuszczeniu operacji do fizycznej realizacji przez moduł wykonawczy. 
+Całość procesu zamyka pętla zwrotna, która w przypadku odmowy autoryzacji przesyła do użytkownika precyzyjny komunikat o wystąpieniu błędu.
 
 Przykładowe komendy:
 
-LED R  
-LED G  
-LED B  
-LED W  
-LED OFF  
+L1 -> odpowiada zasileniu jednej diody LED.  
+L4 -> dopowiada zasileniu czterech diod LED.
 
 Slave wykonuje następujące kroki:
 
