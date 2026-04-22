@@ -4,17 +4,17 @@
 #include "uart_manager.h"
 
 typedef enum {
-    SL_STATE_IDLE,
-    SL_STATE_WAIT_AUTH,
-    SL_STATE_STOPPED,
-    SL_STATE_ERROR
+  SL_STATE_IDLE,
+  SL_STATE_WAIT_AUTH,
+  SL_STATE_STOPPED,
+  SL_STATE_ERROR
 } SL_State_t;
 
 typedef struct {
-    SL_State_t state;
-    uint32_t timer;
-    uint8_t pendingLeds;
-    UART_Manager_t *pcUart;
+  SL_State_t state;
+  uint32_t timer;
+  uint8_t pendingLeds;
+  UART_Manager_t *pcUart;
 } SL_Context_t;
 
 void SL_HandleMasterResponse(SL_Context_t *ctx, uint8_t masterResponse);
