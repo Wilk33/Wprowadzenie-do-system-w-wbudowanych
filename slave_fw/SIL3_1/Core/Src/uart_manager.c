@@ -1,4 +1,5 @@
-#include "uart_manager.h"
+// Copyright 2026 Gruby
+include "uart_manager.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

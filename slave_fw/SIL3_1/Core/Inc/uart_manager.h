@@ -1,3 +1,4 @@
+// Copyright 2026 Gruby
 #pragma once
 #include "main.h"
 #include <stdbool.h>

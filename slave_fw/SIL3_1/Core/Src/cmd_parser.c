@@ -1,3 +1,4 @@
+// Copyright 2026 Gruby
 #include "cmd_parser.h"
 #include <string.h>
 

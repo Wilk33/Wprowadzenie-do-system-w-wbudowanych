@@ -1,3 +1,4 @@
+// Copyright 2026 Gruby
 #include "safety_logic.h"
 #include "cmd_parser.h"
 #include "io_manager.h"

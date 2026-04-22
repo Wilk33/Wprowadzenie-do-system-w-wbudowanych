@@ -1,3 +1,4 @@
+// Copyright 2026 Gruby
 /* USER CODE BEGIN Header */
 /**
  ******************************************************************************
@@ -18,7 +19,7 @@
  */
 /* USER CODE END Header */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __GPIO_H__
+#ifndef SLAVE_FW_SIL3_1_CORE_INC_GPIO_H_
 #define __GPIO_H__
 
 #ifdef __cplusplus
@@ -45,4 +46,4 @@ void MX_GPIO_Init(void);
 #ifdef __cplusplus
 }
 #endif
-#endif /*__ GPIO_H__ */
+#endif  // SLAVE_FW_SIL3_1_CORE_INC_GPIO_H_

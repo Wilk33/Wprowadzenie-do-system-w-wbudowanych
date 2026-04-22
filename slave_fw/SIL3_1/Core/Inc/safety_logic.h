@@ -1,4 +1,5 @@
-#ifndef INC_SAFETY_LOGIC_H_
+// Copyright 2026 Gruby
+#ifndef SLAVE_FW_SIL3_1_CORE_INC_SAFETY_LOGIC_H_
 #define INC_SAFETY_LOGIC_H_
 
 #include "uart_manager.h"
@@ -22,4 +23,5 @@ void SL_Init(SL_Context_t *ctx, UART_Manager_t *pcUart);
 void SL_HandlePCCommand(SL_Context_t *ctx);
 void SL_Update(SL_Context_t *ctx);
 
-#endif
+#endif  // SLAVE_FW_SIL3_1_CORE_INC_SAFETY_LOGIC_H_
+

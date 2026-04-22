@@ -1,4 +1,5 @@
-#ifndef INC_CMD_PARSER_H_
+// Copyright 2026 Gruby
+#ifndef SLAVE_FW_SIL3_1_CORE_INC_CMD_PARSER_H_ 
 #define INC_CMD_PARSER_H_
 
 #include <stdbool.h>
@@ -14,4 +15,4 @@ typedef struct {
 
 CP_Result_t CP_Parse(const char *rawStr);
 
-#endif
+#endif  // SLAVE_FW_SIL3_1_CORE_INC_CMD_PARSER_H_

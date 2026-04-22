@@ -1,3 +1,4 @@
+// Copyright 2026 Gruby
 /* USER CODE BEGIN Header */
 /**
  ******************************************************************************
@@ -21,7 +22,7 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef STM32L4xx_HAL_CONF_H
+#ifndef SLAVE_FW_SIL3_1_CORE_INC_STM32L4XX_HAL_CONF_H_
 #define STM32L4xx_HAL_CONF_H
 
 #ifdef __cplusplus
@@ -139,7 +140,7 @@ extern "C" {
 #if !defined(HSI48_VALUE)
 #define HSI48_VALUE                                                            \
   ((uint32_t)48000000U) /*!< Value of the Internal High Speed oscillator for   \
-                         USB FS/SDMMC/RNG in Hz. The real value my vary                                                        \
+                         USB FS/SDMMC/RNG in Hz. The real value my vary        \
                          depending on manufacturing process variations.*/
 #endif                  /* HSI48_VALUE */
 
@@ -492,4 +493,4 @@ void assert_failed(uint8_t *file, uint32_t line);
 }
 #endif
 
-#endif /* STM32L4xx_HAL_CONF_H */
+#endif  // SLAVE_FW_SIL3_1_CORE_INC_STM32L4XX_IT_H_

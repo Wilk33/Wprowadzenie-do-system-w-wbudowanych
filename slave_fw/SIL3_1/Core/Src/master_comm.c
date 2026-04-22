@@ -1,3 +1,4 @@
+// Copyright 2026 Gruby
 #include "master_comm.h"
 #include "usart.h"
 #include <stdbool.h>

@@ -1,3 +1,4 @@
+// Copyright 2026 Gruby
 /* USER CODE BEGIN Header */
 /**
  ******************************************************************************
@@ -19,7 +20,7 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __MAIN_H
+#ifndef SLAVE_FW_SIL3_1_CORE_INC_MAIN_H_
 #define __MAIN_H
 
 #ifdef __cplusplus
@@ -76,4 +77,5 @@ void Error_Handler(void);
 }
 #endif
 
-#endif /* __MAIN_H */
+#endif  // SLAVE_FW_SIL3_1_CORE_INC_MAIN_H_
+

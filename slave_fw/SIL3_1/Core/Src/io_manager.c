@@ -1,3 +1,4 @@
+// Copyright 2026 Gruby
 #include "io_manager.h"
 
 // Mapowanie Twoich pinów diod (przykładowe)
