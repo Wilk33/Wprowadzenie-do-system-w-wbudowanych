@@ -11,6 +11,7 @@ void SIL_Watchdog_Feed(void);
 int SIL_Watchdog_IsExpired(void);
 
 uint16_t SIL_CalculateCRC(uint8_t *data, uint8_t length);
-int SIL_ProcessPingFrame(uint8_t *buffer, uint8_t *last_seq, uint8_t *first_ping);
+int SIL_ProcessPingFrame(uint8_t *buffer, uint8_t *last_seq,
+                         uint8_t *first_ping);
 
 #endif /* SIL_WATCHDOG_H */
