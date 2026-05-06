@@ -1,51 +1,19 @@
-/* USER CODE BEGIN Header */
-/**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2026 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
-/* USER CODE END Header */
+//Copyright 2026 Tobiasz_Kandziora
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdio.h>
-#include <string.h>
-#include <stdint.h>
-#include <stdlib.h>
+#include "master_app.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-typedef enum {
-    MASTER_IDLE,
-    MASTER_PROCESSING_AUTH,
-    MASTER_AUTHORIZATION_DONE
-} MasterState_t;
-
-typedef struct {
-    char command;
-    uint16_t crc;
-} AuthRequest_t;
 
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define AUTH_TIMEOUT_MS 5000
-#define RX_BUFFER_SIZE 20
 
 /* USER CODE END PD */
 
@@ -57,16 +25,8 @@ typedef struct {
 /* Private variables ---------------------------------------------------------*/
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
-
 /* USER CODE BEGIN PV */
-MasterState_t master_state = MASTER_IDLE;
-uint8_t rx_buffer[RX_BUFFER_SIZE];
-uint8_t rx_index = 0;
-uint32_t auth_start_time = 0;
-char last_command = '0';
-uint8_t authorization_response = 0;  // 1 = OK, 0 = NO/timeout
-extern uint32_t systick_ms;  // Zadeklarowana w stm32l4xx_it.c
-
+uint8_t rx_data_uart1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -75,188 +35,11 @@ static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
-uint16_t CalculateCRC(uint8_t *data, uint16_t length);
-void ProcessAuthorizationRequest(int command);
-void SendAuthorizationResponse(uint8_t response);
-void HandleAuthorizationTimeout(void);
-uint32_t GetTimeMs(void);
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-uint32_t GetTimeMs(void)
-{
-    return systick_ms;
-}
-
-/* CRC16 - identyczne jak u Slave'a */
-uint16_t CalculateCRC(uint8_t *data, uint16_t length)
-{
-    uint16_t crc = 0xFFFF;
-
-    for (uint16_t i = 0; i < length; i++)
-    {
-        crc ^= (data[i] << 8);
-
-        for (uint8_t j = 0; j < 8; j++)
-        {
-            if (crc & 0x8000)
-            {
-                crc = (crc << 1) ^ 0x1021;  // CRC_POLY = 0x1021
-            }
-            else
-            {
-                crc = crc << 1;
-            }
-            crc &= 0xFFFF;
-        }
-    }
-
-    return crc;
-}
-
-/* Wysłanie autoryzacji (1 = OK, 0 = NO) */
-void SendAuthorizationResponse(uint8_t response)
-{
-    char response_msg[10];
-    sprintf(response_msg, "%d\r\n", response);
-
-    /* DEBUG */
-    HAL_UART_Transmit(&huart2, (uint8_t*)"SENDING_AUTH:", 13, 100);
-    HAL_UART_Transmit(&huart2, (uint8_t*)response_msg, strlen(response_msg), 100);
-
-    HAL_UART_Transmit(&huart1, (uint8_t*)response_msg, strlen(response_msg), 100);
-}
-/* Przetwarzanie żądania autoryzacji od Slave'a */
-void ProcessAuthorizationRequest(int command)
-{
-    /* Walidacja komendy */
-    if (command >= 1 && command <= 8)
-    {
-        /* Przechowaj komendę */
-        last_command = command;
-
-        /* Zatwierdź wszystkie (1 = OK) */
-        authorization_response = 1;
-
-        master_state = MASTER_AUTHORIZATION_DONE;
-        SendAuthorizationResponse(1);
-    }
-    else
-    {
-        /* Niepoprawna komenda */
-        authorization_response = 0;
-        master_state = MASTER_AUTHORIZATION_DONE;
-        SendAuthorizationResponse(0);
-    }
-}
-
-/* Obsługa timeout autoryzacji */
-void HandleAuthorizationTimeout(void)
-{
-    if (master_state == MASTER_PROCESSING_AUTH)
-    {
-        uint32_t elapsed = GetTimeMs() - auth_start_time;
-
-        if (elapsed > AUTH_TIMEOUT_MS)
-        {
-            /* Timeout - brak odpowiedzi od Slave'a */
-            authorization_response = 0;
-            master_state = MASTER_IDLE;
-            rx_index = 0;
-
-            /* Opcjonalnie: wyślij błąd */
-            char error_msg[] = "Authorization timeout\r\n";
-            HAL_UART_Transmit(&huart1, (uint8_t*)error_msg, strlen(error_msg), 100);
-        }
-    }
-}
-
-/* Callback UART1 - odbiór żądania autoryzacji od Slave'a */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-    if (huart->Instance == USART1)
-    {
-        if (rx_index < RX_BUFFER_SIZE - 1)
-        {
-            rx_index++;
-        }
-
-        /* Sprawdzanie czy otrzymaliśmy "\n" */
-        if (rx_buffer[rx_index - 1] == '\n')
-        {
-            /* Zatrzymaj string na pierwszym \r lub \n */
-            for (int i = 0; i < rx_index; i++)
-            {
-                if (rx_buffer[i] == '\r' || rx_buffer[i] == '\n')
-                {
-                    rx_buffer[i] = 0;
-                    break;
-                }
-            }
-
-            /* DEBUG: Wyślij surowy bufor */
-            HAL_UART_Transmit(&huart2, (uint8_t*)"PKT:", 4, 100);
-            HAL_UART_Transmit(&huart2, rx_buffer, strlen((char*)rx_buffer), 100);
-            HAL_UART_Transmit(&huart2, (uint8_t*)"\r\n", 2, 100);
-
-            /* Pełny pakiet odebrany */
-            if (strncmp((char*)rx_buffer, "Aut_req:", 8) == 0)
-            {
-                int command = 0;
-                uint16_t received_crc = 0;
-
-                /* Parsuj ręcznie: "1,F1D1" */
-                char *ptr = (char*)&rx_buffer[8];
-                command = atoi(ptr);
-
-                /* Znajdź przecinek i parsuj hex */
-                while (*ptr && *ptr != ',') ptr++;
-                if (*ptr == ',') ptr++;
-                received_crc = (uint16_t)strtol(ptr, NULL, 16);
-
-                char parse_msg[60];
-                sprintf(parse_msg, "cmd=%d crc=%04hx\r\n", command, received_crc);
-                HAL_UART_Transmit(&huart2, (uint8_t*)parse_msg, strlen(parse_msg), 100);
-
-                if (command > 0 && command <= 8)
-                {
-                    uint8_t cmd_byte = (uint8_t)command;
-                    uint16_t calculated_crc = CalculateCRC(&cmd_byte, 1);
-
-                    char crc_msg[50];
-                    sprintf(crc_msg, "calc=%04hx recv=%04hx\r\n", calculated_crc, received_crc);
-                    HAL_UART_Transmit(&huart2, (uint8_t*)crc_msg, strlen(crc_msg), 100);
-
-                    if (calculated_crc == received_crc)
-                    {
-                        HAL_UART_Transmit(&huart2, (uint8_t*)"CRC_OK - PROCESSING\r\n", 21, 100);
-                        int cmd_int = command;
-                        ProcessAuthorizationRequest(cmd_int);
-                    }
-                    else
-                    {
-                        HAL_UART_Transmit(&huart2, (uint8_t*)"CRC_FAIL\r\n", 10, 100);
-                        SendAuthorizationResponse(0);
-                    }
-                }
-            }
-            else
-            {
-                HAL_UART_Transmit(&huart2, (uint8_t*)"FMT_ERR\r\n", 9, 100);
-            }
-
-            /* Reset bufora */
-            rx_index = 0;
-            memset(rx_buffer, 0, RX_BUFFER_SIZE);
-        }
-
-        /* Ponowne włączenie nasłuchiwania */
-        HAL_UART_Receive_IT(&huart1, &rx_buffer[rx_index], 1);
-    }
-}
 
 /* USER CODE END 0 */
 
@@ -292,15 +75,8 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-
-  /* Włącz LED sygnalizacyjny */
-  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
-
-  /* Włącz odbiór UART1 przerwaniami */
-  HAL_UART_Receive_IT(&huart1, &rx_buffer[rx_index], 1);
-
-  master_state = MASTER_IDLE;
-
+  MasterApp_Init();
+  HAL_UART_Receive_IT(&huart1, &rx_data_uart1, 1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -311,21 +87,9 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-    /* Monitoring timeout autoryzacji */
-    HandleAuthorizationTimeout();
-
-    if (master_state == MASTER_AUTHORIZATION_DONE)
-    {
-        HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
-        HAL_Delay(200);
-        HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
-        master_state = MASTER_IDLE;
-    }
-    /* Symulacja pracy Mastera - można tutaj dodać logikę decyzji */
-    HAL_Delay(10);
-
+	  MasterApp_Process();
   }
-  /* USER CODE END 3 */
+    /*USER CODE END 3 */
 }
 
 /**
@@ -485,7 +249,26 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+    if (huart->Instance == USART1)
+    {
+        /* Przekazujemy odebrany znak do parsera w master_app */
+        MasterApp_UART1_RxCallback(rx_data_uart1);
 
+        /* Wznawiamy nasłuchiwanie */
+        HAL_UART_Receive_IT(&huart1, &rx_data_uart1, 1);
+    }
+}
+
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
+{
+    if (huart->Instance == USART1)
+    {
+        MasterApp_UART_ErrorCallback();
+        HAL_UART_Receive_IT(&huart1, &rx_data_uart1, 1);
+    }
+}
 /* USER CODE END 4 */
 
 /**
