@@ -29,4 +29,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_CLANG_FORMAT: false
           FILTER_REGEX_EXCLUDE: (Drivers|CMSIS)
-          CPP_LINT_FLAGS: "--filter=-build/include_subdir,-readability/casting"
+          
+          # --- NASZE ZMIANY ---
+          # Wyłączamy cpplint, bo to linter dla C++, a nie dla C
+          VALIDATE_CPP: false
+          # Upewniamy się, że linter dla czystego C jest włączony (używa clang-tidy/cppcheck)
+          VALIDATE_C: true
