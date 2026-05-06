@@ -1,10 +1,12 @@
 // Copyright 2026 Tobiasz_Kandziora
 #include "slave_app.h"
+#include <stdio.h>
+#include <string.h>
+
 #include "led_driver.h"
 #include "sil_watchdog.h"
 #include "stm32l4xx_hal.h"
-#include <stdio.h>
-#include <string.h>
+
 
 extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
@@ -38,7 +40,7 @@ static void SendMessage(const char *msg) {
 static void SendAuthorizationRequest(uint8_t command) {
   uint16_t crc = SIL_CalculateCRC(&command, 1);
   char buffer[24];
-  uint8_t len = sprintf(buffer, "Aut_req:%d,%04X\r\n", command, crc);
+  uint8_t len = snprintf(buffer, sizeof(buffer), "Aut_req:%d,%04X\r\n", command, crc);
   HAL_UART_Transmit(&huart1, (uint8_t*) buffer, len, 100);
   slave_state = STATE_WAITING_MASTER_AUTH;
   auth_timeout = HAL_GetTick();

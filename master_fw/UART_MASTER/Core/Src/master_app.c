@@ -29,7 +29,7 @@ static uint8_t authorization_response = 0;
 
 static void SendAuthorizationResponse(uint8_t response) {
   char response_msg[10];
-  sprintf(response_msg, "%d\r\n", response);
+  snprintf(response_msg, sizeof(response_msg), "%d\r\n", response);
 
   HAL_UART_Transmit(&huart2, (uint8_t*) "SENDING_AUTH:", 13, 100);  // NOLINT
   HAL_UART_Transmit(&huart2, (uint8_t*) response_msg, strlen(response_msg),
