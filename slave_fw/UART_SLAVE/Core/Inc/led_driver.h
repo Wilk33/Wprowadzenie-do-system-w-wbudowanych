@@ -1,4 +1,5 @@
 // Copyright 2026 Tobiasz_Kandziora
+// Tutaj znajdują się tylko funkcje do fizycznego zapalania diod i robienia Self-Testu.
 #ifndef SLAVE_FW_UART_SLAVE_CORE_INC_LED_DRIVER_H_
 #define SLAVE_FW_UART_SLAVE_CORE_INC_LED_DRIVER_H_
 

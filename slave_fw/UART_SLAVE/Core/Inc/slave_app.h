@@ -1,4 +1,6 @@
 // Copyright 2026 Tobiasz_Kandziora
+// Ten plik zawiera funkcje odpowiedzialne za główną maszynę stanów Slave'a
+// i odbieranie komend z UART.
 #ifndef SLAVE_FW_UART_SLAVE_CORE_INC_SLAVE_APP_H_
 #define SLAVE_FW_UART_SLAVE_CORE_INC_SLAVE_APP_H_
 

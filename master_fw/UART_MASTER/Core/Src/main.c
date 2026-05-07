@@ -71,7 +71,11 @@ int main(void) {
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+
+  // Inicjalizacja środowiska aplikacyjnego Mastera (stany, SIL)
   MasterApp_Init();
+
+  // Otwarcie nasłuchiwania na magistrali w trybie przerwań (1 bajt)
   HAL_UART_Receive_IT(&huart1, &rx_data_uart1, 1);
   /* USER CODE END 2 */
 
@@ -79,6 +83,8 @@ int main(void) {
   /* USER CODE BEGIN WHILE */
   while (1) {
     /* USER CODE END WHILE */
+
+    // Główny silnik zarządzający Masterem, m.in generuje Ping (Heartbeat)
     MasterApp_Process();
     /* USER CODE BEGIN 3 */
   }
@@ -230,6 +236,13 @@ static void MX_GPIO_Init(void) {
 }
 
 /* USER CODE BEGIN 4 */
+
+/**
+ * @brief Sprzętowe przerwanie odbioru pełnego znaku z UART (Callback).
+ * @param huart Wskaźnik na strukturę portu z którego nadeszły dane.
+ * @details Funkcja wyłapuje znaki w tle i przekierowuje je do maszyny
+ * parsującej, po czym natychmiast wznawia nasłuchiwanie.
+ */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
   if (huart->Instance == USART1) {
     /* Przekazujemy odebrany znak do parsera w master_app */
@@ -240,6 +253,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
   }
 }
 
+/**
+ * @brief Callback wywoływany w przypadku awarii fizycznej na linii (np. odpięcie kabla).
+ * @details Przekazuje sygnał do aplikacji o konieczności wyczyszczenia zepsutych buforów
+ * i po cichu resetuje stan peryferii.
+ */
 void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
   if (huart->Instance == USART1) {
     MasterApp_UART_ErrorCallback();

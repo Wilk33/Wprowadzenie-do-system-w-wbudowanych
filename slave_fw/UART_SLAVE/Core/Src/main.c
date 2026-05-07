@@ -87,7 +87,10 @@ int main(void) {
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
+  // Inicjalizacja naszej aplikacji (maszyny stanów) i wejście w tryb Safe Boot
   SlaveApp_Init();
+
+  // Rozpoczęcie nasłuchiwania na obu portach UART w trybie przerwań (1 znak naraz)
   HAL_UART_Receive_IT(&huart1, &rx_data_uart1, 1);
   HAL_UART_Receive_IT(&huart2, &rx_data_uart2, 1);
 
@@ -100,6 +103,8 @@ int main(void) {
 
     /* USER CODE BEGIN 3 */
 
+    // Główny silnik aplikacji. To ta funkcja w kółko sprawdza czas Watchdoga
+    // i obsługuje logikę opóźnień niezależnie od odbieranych znaków UART.
     SlaveApp_Process();
   }
   /* USER CODE END 3 */
@@ -263,17 +268,29 @@ static void MX_GPIO_Init(void) {
 
 /* USER CODE BEGIN 4 */
 
-/* ── UART callbacks ───────── */
+/**
+ * @brief Sprzętowe przerwanie odbioru pełnego znaku z UART (Callback).
+ * @param huart Wskaźnik na strukturę portu, z którego nadeszły dane.
+ * @details Funkcja wyłapuje znaki w tle i przekierowuje je do warstwy
+ * aplikacji, po czym natychmiast wznawia nasłuchiwanie.
+ */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
   if (huart->Instance == USART2) {
+    // Odebrano znak z komputera PC
     SlaveApp_UART2_RxCallback(rx_data_uart2);
     HAL_UART_Receive_IT(&huart2, &rx_data_uart2, 1);
   } else if (huart->Instance == USART1) {
+    // Odebrano znak z Mastera
     SlaveApp_UART1_RxCallback(rx_data_uart1);
     HAL_UART_Receive_IT(&huart1, &rx_data_uart1, 1);
   }
 }
 
+/**
+ * @brief Przerwanie w przypadku fizycznego błędu komunikacji (np. odpięcie kabla).
+ * @details Kluczowe zabezpieczenie (Hot-plug protection). Zapobiega trwałemu
+ * zablokowaniu się sprzętowego układu UART w mikrokontrolerze po błędzie Overrun.
+ */
 void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
   if (huart->Instance == USART1) {
     HAL_UART_Receive_IT(&huart1, &rx_data_uart1, 1);

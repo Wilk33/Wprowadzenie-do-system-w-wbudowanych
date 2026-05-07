@@ -1,4 +1,5 @@
 // Copyright 2026 Tobiasz_Kandziora
+// Ten moduł odpowiada za odliczanie czasu Watchdoga i weryfikację sum CRC (Heartbeat).
 #ifndef SLAVE_FW_UART_SLAVE_CORE_INC_SIL_WATCHDOG_H_
 #define SLAVE_FW_UART_SLAVE_CORE_INC_SIL_WATCHDOG_H_
 
